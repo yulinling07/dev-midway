@@ -1,0 +1,58 @@
+EJS 模板渲染 (file)
+
+<form action="/api/todo" method="POST">
+  <input name="text" /> <button>确定</button>
+</form>
+
+<ul>
+  <% list.forEach(function(item) { %>
+    <li>
+      <span onclick="showUpdateInput(this.parentElement)"><%= item.text %></span>
+      <input onblur="saveUpdateInput('<%= item.text %>', this.parentElement)" name="text" type="hidden" value="<%= item.text %>" />
+      <a href="javascript:void(0)" onclick="deleteTodo('<%= item.text %>')">删除</a>
+    </li>
+  <% }) %>
+</ul>
+
+<script>
+  function showUpdateInput(li) {
+    // span 隐藏
+    const item = li.querySelector('span')
+    item.style.display = 'none';
+
+    // input 显示出来
+    const input = li.querySelector('input');
+    input.type = '';
+    input.focus();
+  }
+
+  function saveUpdateInput(oldText, li) {
+    // 拿 newText
+    const input = li.querySelector('input');
+    const newText = input.value;
+
+    // PUT /api/todo
+    fetch("http://127.0.0.1:7001/api/todo?oldText=" + encodeURI(oldText) + "&newText=" + encodeURI(newText), {
+      "body": null,
+      "method": "PUT",
+      // "mode": "cors",
+      // "credentials": "omit"
+    }).then(() => {
+      // 重新渲染一下当前的页面
+      location.href = location.href;
+    });
+  }
+
+  function deleteTodo(text) {
+    // DELETE /api/todo
+    fetch("http://127.0.0.1:7001/api/todo?text=" + encodeURI(text), {
+      "body": null,
+      "method": "DELETE",
+      // "mode": "cors",
+      // "credentials": "omit"
+    }).then(() => {
+      // 重新渲染一下当前的页面
+      location.href = location.href;
+    });
+  }
+</script>
