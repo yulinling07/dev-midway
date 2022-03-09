@@ -6,10 +6,6 @@ import { Provide, Scope, ScopeEnum } from '@midwayjs/decorator';
 @Provide()
 export class RenderService {
   async render(file: string, locals: any) {
-    const html = await renderFile(
-      join(__dirname, `../app/view/${file}.ejs`),
-      locals
-    );
-    return html;
+    return renderFile(join(__dirname, `../../app/view/${file}.ejs`), locals);
   }
 }

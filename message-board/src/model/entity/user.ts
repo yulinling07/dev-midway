@@ -3,13 +3,16 @@ import { Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @EntityModel('user')
 export class User {
-  //自增组件
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    length: 32,
+  })
   username: string;
 
-  @Column()
+  @Column({
+    length: 32,
+  })
   password: string;
 }
