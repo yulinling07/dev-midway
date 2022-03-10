@@ -17,9 +17,9 @@ export default (appInfo: EggAppInfo) => {
     replaceEggLogger: true,
   };
 
-  // config.security = {
-  //   csrf: false,
-  // };
+  config.security = {
+    csrf: false,
+  };
 
   /**
    * 单数据库实例
